@@ -1,0 +1,100 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img "RedoGo" [ref=e6]
+        - paragraph [ref=e7]: RedoGo
+      - generic [ref=e8]:
+        - link "Speisekarte" [ref=e9] [cursor=pointer]:
+          - /url: "#"
+        - link "Liefern" [ref=e10] [cursor=pointer]:
+          - /url: "#"
+        - link "Abholen" [ref=e11] [cursor=pointer]:
+          - /url: "#"
+        - link "Über uns" [ref=e12] [cursor=pointer]:
+          - /url: "#"
+      - button "Jetzt bestellen" [ref=e13] [cursor=pointer]
+  - generic [ref=e14]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - paragraph [ref=e21]: Lokal bestellen
+        - heading "Frisches Essen. Direkt aus der Nachbarschaft." [level=1] [ref=e22]
+        - paragraph [ref=e23]: Bestelle dein Lieblingsessen aus lokalen Restaurants — zur Lieferung nach Hause oder zur Abholung vor Ort. Einfach, schnell, lokal.
+        - generic [ref=e24]:
+          - button "Jetzt bestellen" [ref=e25] [cursor=pointer]
+          - button "Tisch reservieren" [ref=e26] [cursor=pointer]
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - paragraph [ref=e29]: 50+
+            - paragraph [ref=e30]: Restaurants
+          - generic [ref=e31]:
+            - paragraph [ref=e32]: 30 min
+            - paragraph [ref=e33]: Ø Lieferzeit
+          - generic [ref=e34]:
+            - paragraph [ref=e35]: 4.8★
+            - paragraph [ref=e36]: Bewertung
+      - generic [ref=e37]:
+        - img "Frische lokale Pizza aus dem Holzofen" [ref=e39]
+        - generic [ref=e41]:
+          - generic [ref=e42]: 🛵
+          - generic [ref=e43]:
+            - paragraph [ref=e44]: 30 Min
+            - paragraph [ref=e45]: Lieferzeit
+        - generic [ref=e46]:
+          - paragraph [ref=e47]: ★ 4.9
+          - paragraph [ref=e48]: Top bewertet
+    - generic [ref=e51]:
+      - generic [ref=e52] [cursor=pointer]:
+        - img "Pizza Lieferservice" [ref=e53]
+        - generic [ref=e55]:
+          - heading "Lieferservice" [level=3] [ref=e62]
+          - paragraph [ref=e63]: Frisches Essen direkt an deine Tür. Ab 2,90 € Liefergebühr.
+          - button "Jetzt bestellen →" [ref=e64]
+      - generic [ref=e65] [cursor=pointer]:
+        - img "Restaurant Tisch Abendessen" [ref=e66]
+        - generic [ref=e68]:
+          - heading "Vor-Ort & Abholung" [level=3] [ref=e73]
+          - paragraph [ref=e74]: Tisch reservieren, vorab bestellen, ankommen und genießen.
+          - button "Tisch reservieren →" [ref=e75]
+    - generic [ref=e77]:
+      - heading "Einfacher geht's nicht." [level=2] [ref=e79]
+      - generic [ref=e80]:
+        - generic [ref=e82]:
+          - paragraph [ref=e84]: "1"
+          - heading "Restaurant entdecken" [level=3] [ref=e85]
+          - paragraph [ref=e86]: Durchstöbere lokale Restaurants und Speisekarten in deiner Nähe.
+        - generic [ref=e87]:
+          - paragraph [ref=e89]: "2"
+          - heading "Gericht wählen" [level=3] [ref=e90]
+          - paragraph [ref=e91]: Wähle was du möchtest — zur Lieferung, Abholung oder direkt im Lokal.
+        - generic [ref=e92]:
+          - paragraph [ref=e94]: "3"
+          - heading "Genießen" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Verfolge deine Bestellung live oder erscheine einfach zum reservierten Tisch.
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - heading "Frisch & Lokal" [level=3] [ref=e105]
+        - paragraph [ref=e106]: Nur Restaurants aus deiner Umgebung. Kürzere Wege, frischeres Essen, lokale Wirtschaft stärken.
+      - generic [ref=e107]:
+        - heading "Blitzschnell" [level=3] [ref=e112]
+        - paragraph [ref=e113]: Durchschnittlich 30 Minuten Lieferzeit. Live-Tracking zeigt dir, wo dein Essen gerade ist.
+      - generic [ref=e114]:
+        - heading "Für später planen" [level=3] [ref=e120]
+        - paragraph [ref=e121]: Tisch und Bestellung im Voraus aufgeben. Ankomme und genieße — ohne Wartezeit.
+    - generic [ref=e125]:
+      - heading "Bereit zum Bestellen?" [level=2] [ref=e126]
+      - paragraph [ref=e127]: Entdecke die besten lokalen Restaurants in deiner Stadt. Kostenlos, ohne Anmeldung stöbern.
+      - generic [ref=e128]:
+        - button "Restaurants entdecken" [ref=e129] [cursor=pointer]
+        - button "Tisch reservieren" [ref=e130] [cursor=pointer]
+    - contentinfo [ref=e131]:
+      - generic [ref=e133]:
+        - paragraph [ref=e134]: RedoGo
+        - paragraph [ref=e135]: © 2024 RedoGo · Lokale Gastronomie, neu gedacht.
+        - generic [ref=e136]:
+          - link "Impressum" [ref=e137] [cursor=pointer]:
+            - /url: "#"
+          - link "Datenschutz" [ref=e138] [cursor=pointer]:
+            - /url: "#"
+          - link "Kontakt" [ref=e139] [cursor=pointer]:
+            - /url: "#"

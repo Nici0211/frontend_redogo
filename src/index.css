@@ -1,5 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Nunito:wght@400;500;600;700;800&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0d0d0d;
+  color: #f5f5f5;
+  font-family: 'Nunito', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.anim-fade-up {
+  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.anim-fade-up-1 {
+  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+.anim-fade-up-2 {
+  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+}
+.anim-fade-up-3 {
+  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both;
+}
+.anim-scale-in {
+  animation: scaleIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-up-1,
+  .anim-fade-up-2,
+  .anim-fade-up-3,
+  .anim-scale-in {
+    animation: none;
+  }
 }
