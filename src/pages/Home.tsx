@@ -111,7 +111,6 @@ function Hero() {
           {/* Text side */}
           <Box sx={{ flex: '0 0 auto', width: { xs: '100%', md: '52%' } }}>
 
-
             <Typography
               component="h1"
               className="anim-fade-up-1"
