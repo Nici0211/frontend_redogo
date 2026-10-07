@@ -28,8 +28,12 @@ export default function Navbar() {
           gap: 2,
         }}
       >
-        {/* Brand */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0 }}>
+        {/* Brand → Home */}
+        <Box
+          component={Link}
+          to="/"
+          sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, textDecoration: 'none' }}
+        >
           <Box
             component="img"
             src={logo}
