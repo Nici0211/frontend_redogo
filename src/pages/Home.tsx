@@ -114,9 +114,6 @@ export default function Home() {
             <Typography sx={{ fontFamily: FONT_DISPLAY, fontWeight: 900, fontSize: '1.3rem', textTransform: 'uppercase', color: C.ink }}>
               Redo<span style={{ color: C.red }}>Go</span>
             </Typography>
-            <Typography sx={{ fontFamily: FONT_BODY, fontSize: '0.85rem', color: C.muted }}>
-              © 2024 RedoGo · Lokale Gastronomie, neu gedacht.
-            </Typography>
             <Box sx={{ display: 'flex', gap: 3 }}>
               {['Impressum', 'Datenschutz', 'Kontakt'].map((l) => (
                 <Typography key={l} component="a" href="#" sx={{
