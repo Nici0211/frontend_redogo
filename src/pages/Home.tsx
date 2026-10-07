@@ -303,9 +303,6 @@ export default function Home() {
 >>>>>>> f3a2a1b (Home patch)
               Redo<span style={{ color: C.red }}>Go</span>
             </Typography>
-            <Typography sx={{ fontFamily: FONT_BODY, fontSize: '0.85rem', color: C.muted }}>
-              © 2024 RedoGo · Lokale Gastronomie, neu gedacht.
-            </Typography>
             <Box sx={{ display: 'flex', gap: 3 }}>
               {['Impressum', 'Datenschutz', 'Kontakt'].map((l) => (
 <<<<<<< HEAD
