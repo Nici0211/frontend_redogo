@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem } from '@mui/material'
+import { Link } from 'react-router-dom'
 import logo from '../assets/img.png'
 
 const navLinks = ['Speisekarte', 'Liefern', 'Abholen', 'Über uns']
@@ -73,26 +74,48 @@ export default function Navbar() {
         </Box>
 
         {/* CTA */}
-        <Button
-          sx={{
-            ml: 'auto',
-            display: { xs: 'none', md: 'flex' },
-            bgcolor: '#e8000d',
-            color: '#fff',
-            fontFamily: "'Barlow Condensed', sans-serif",
-            fontWeight: 800,
-            fontSize: '1rem',
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-            px: 3,
-            py: 1,
-            borderRadius: '6px',
-            '&:hover': { bgcolor: '#c4000b', transform: 'translateY(-1px)', boxShadow: '0 4px 20px rgba(232,0,13,0.35)' },
-            transition: 'all 0.18s',
-          }}
-        >
-          Jetzt bestellen
-        </Button>
+        <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'flex' }, gap: 1.5 }}>
+          <Button
+            component={Link}
+            to="/registrieren"
+            variant="outlined"
+            sx={{
+              color: '#f5f5f5',
+              borderColor: 'rgba(245,245,245,0.18)',
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontWeight: 700,
+              fontSize: '1rem',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              px: 3,
+              py: 1,
+              borderRadius: '6px',
+              textDecoration: 'none',
+              '&:hover': { borderColor: '#f5f5f5', bgcolor: 'rgba(255,255,255,0.05)' },
+              transition: 'all 0.18s',
+            }}
+          >
+            Registrieren
+          </Button>
+          <Button
+            sx={{
+              bgcolor: '#e8000d',
+              color: '#fff',
+              fontFamily: "'Barlow Condensed', sans-serif",
+              fontWeight: 800,
+              fontSize: '1rem',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              px: 3,
+              py: 1,
+              borderRadius: '6px',
+              '&:hover': { bgcolor: '#c4000b', transform: 'translateY(-1px)', boxShadow: '0 4px 20px rgba(232,0,13,0.35)' },
+              transition: 'all 0.18s',
+            }}
+          >
+            Jetzt bestellen
+          </Button>
+        </Box>
 
         {/* Mobile hamburger */}
         <IconButton
@@ -146,6 +169,30 @@ export default function Navbar() {
             </ListItem>
           ))}
           <ListItem sx={{ pt: 4, px: 1 }}>
+            <Button
+              component={Link}
+              to="/registrieren"
+              fullWidth
+              variant="outlined"
+              onClick={() => setOpen(false)}
+              sx={{
+                color: '#f5f5f5',
+                borderColor: 'rgba(245,245,245,0.18)',
+                fontFamily: "'Barlow Condensed', sans-serif",
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+                py: 1.5,
+                borderRadius: '6px',
+                textDecoration: 'none',
+                '&:hover': { borderColor: '#f5f5f5' },
+              }}
+            >
+              Registrieren
+            </Button>
+          </ListItem>
+          <ListItem sx={{ pt: 1.5, px: 1 }}>
             <Button
               fullWidth
               sx={{
