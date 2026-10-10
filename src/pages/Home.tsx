@@ -61,6 +61,15 @@ export default function Home() {
               }}>
                 Jetzt bestellen
               </Button>
+              <Button component={Link} to="/standorte" variant="outlined" sx={{
+                color: C.ink, borderColor: 'rgba(255,255,255,0.3)', fontFamily: FONT_DISPLAY,
+                fontWeight: 700, fontSize: '1rem', letterSpacing: '0.05em', textTransform: 'uppercase',
+                px: 4, py: 1.4, borderRadius: '8px', textDecoration: 'none',
+                '&:hover': { borderColor: C.ink, bgcolor: 'rgba(255,255,255,0.06)' },
+                transition: 'border-color 0.15s',
+              }}>
+                Standorte ansehen
+              </Button>
               <Button component={Link} to="/registrieren" variant="outlined" sx={{
                 color: C.ink, borderColor: 'rgba(255,255,255,0.3)', fontFamily: FONT_DISPLAY,
                 fontWeight: 700, fontSize: '1rem', letterSpacing: '0.05em', textTransform: 'uppercase',
