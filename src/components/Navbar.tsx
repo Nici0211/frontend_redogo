@@ -3,7 +3,13 @@ import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, Lis
 import { Link } from 'react-router-dom'
 import logo from '../assets/img.png'
 
-const navLinks = ['Speisekarte', 'Liefern', 'Abholen', 'Über uns']
+const navLinks: { label: string; to?: string }[] = [
+  { label: 'Speisekarte' },
+  { label: 'Standorte', to: '/standorte' },
+  { label: 'Liefern' },
+  { label: 'Abholen' },
+  { label: 'Über uns' },
+]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -59,9 +65,8 @@ export default function Navbar() {
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3.5, ml: 5, flex: 1 }}>
           {navLinks.map((link) => (
             <Typography
-              key={link}
-              component="a"
-              href="#"
+              key={link.label}
+              {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}
               sx={{
                 fontFamily: "'Nunito', sans-serif",
                 fontWeight: 600,
@@ -72,7 +77,7 @@ export default function Navbar() {
                 '&:hover': { color: '#e8000d' },
               }}
             >
-              {link}
+              {link.label}
             </Typography>
           ))}
         </Box>
@@ -153,10 +158,10 @@ export default function Navbar() {
         </IconButton>
         <List sx={{ gap: 0.5 }}>
           {navLinks.map((link) => (
-            <ListItem key={link} sx={{ py: 1.5, px: 1 }}>
+            <ListItem key={link.label} sx={{ py: 1.5, px: 1 }}>
               <Typography
-                component="a"
-                href="#"
+                {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}
+                onClick={() => setOpen(false)}
                 sx={{
                   fontFamily: "'Barlow Condensed', sans-serif",
                   fontWeight: 700,
@@ -168,7 +173,7 @@ export default function Navbar() {
                   '&:hover': { color: '#e8000d' },
                 }}
               >
-                {link}
+                {link.label}
               </Typography>
             </ListItem>
           ))}
