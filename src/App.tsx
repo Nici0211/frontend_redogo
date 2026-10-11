@@ -3,16 +3,20 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Standorte from './pages/Standorte'
+import SpeisekarteAuswahl from './pages/SpeisekarteAuswahl'
+import Speisekarte from './pages/Speisekarte'
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/registrieren" element={<Register />} />
-        <Route path="/standorte" element={<Standorte />} />
-      </Routes>
-    </BrowserRouter>
-  )
-}
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/registrieren" element={<Register />} />
+                <Route path="/standorte" element={<Standorte />} />
+                <Route path="/speisekarte" element={<SpeisekarteAuswahl />} />
+                <Route path="/standorte/:id/speisekarte" element={<Speisekarte />} />
+            </Routes>
+        </BrowserRouter>
+    )
+}
