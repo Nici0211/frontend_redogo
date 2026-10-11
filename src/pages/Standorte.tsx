@@ -1,4 +1,5 @@
 import { Box, Typography, Button, Container, Grid, CircularProgress } from '@mui/material'
+import { Link } from 'react-router-dom'
 import { useRestaurants } from '../services/restaurantService'
 
 const C = {
@@ -68,12 +69,16 @@ export default function Standorte() {
             {restaurants.map((r) => (
               <Grid key={r.id} component="li" size={{ xs: 12, sm: 6, md: 4 }}>
                 <Box
-                  component="article"
+                  component={Link}
+                  to={`/standorte/${r.id}/speisekarte`}
+                  aria-label={`Speisekarte von ${r.name} ansehen`}
                   sx={{
+                    display: 'block', textDecoration: 'none', color: 'inherit',
                     bgcolor: C.surface, border: `1px solid ${C.border}`, borderRadius: '12px',
                     p: { xs: 3, md: 4 }, height: '100%',
                     transition: 'border-color 0.15s, box-shadow 0.15s',
                     '&:hover': { borderColor: 'rgba(232,0,13,0.5)', boxShadow: '0 4px 24px rgba(232,0,13,0.08)' },
+                    '&:focus-visible': { outline: `2px solid ${C.red}`, outlineOffset: '2px' },
                   }}
                 >
                   <Typography
@@ -104,6 +109,9 @@ export default function Standorte() {
                       Adresse folgt in Kürze.
                     </Typography>
                   )}
+                  <Typography sx={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: C.red, mt: 2.5 }}>
+                    Speisekarte ansehen →
+                  </Typography>
                 </Box>
               </Grid>
             ))}

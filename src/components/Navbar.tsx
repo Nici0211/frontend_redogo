@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/img.png'
 
 const navLinks: { label: string; to?: string }[] = [
-  { label: 'Speisekarte' },
+  { label: 'Speisekarte', to: '/speisekarte' },
   { label: 'Standorte', to: '/standorte' },
   { label: 'Liefern' },
   { label: 'Abholen' },
