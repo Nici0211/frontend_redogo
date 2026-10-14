@@ -5,6 +5,7 @@ export interface MenuEntry {
   name: string
   description: string | null
   price: number
+  available: boolean
 }
 
 export interface Menu {
