@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { setUserId } from './userSession'
 
 export interface RegisterFormState {
   firstName: string
@@ -91,6 +92,13 @@ export function useRegisterForm() {
       })
 
       if (res.status === 201) {
+        try {
+          // ID des neuen Benutzers merken - sie wird für den Warenkorb gebraucht
+          const user = await res.json()
+          if (typeof user?.id === 'number') setUserId(user.id)
+        } catch {
+          // Antwort ohne lesbaren Body - die Registrierung war trotzdem erfolgreich
+        }
         setSuccess(true)
       } else if (res.status === 409) {
         setErrors((prev) => ({ ...prev, email: 'E-Mail bereits registriert' }))
