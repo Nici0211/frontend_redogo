@@ -1,6 +1,6 @@
-# Redo Go – Frontend
+#Redo Go – Frontend
 
-Redo Go ist eine Bestell-App im Stil von René „Redo“ Dost, dem Gastronomen und Social-Media-Star hinter Redo XXL. Groß, laut, bunt und mit Portionen, die über den Tellerrand hängen.
+Redo Go ist eine Bestell-App im Stil von René „Redo“ wasdDost, dem Gastronomen und Social-Media-Star hinter Redo XXL. Groß, laut, bunt und mit Portionen, die über den Tellerrand hängen.
 
 Dieses Repository enthält die Weboberfläche für Kunden und für den Inhaber. Die Daten kommen vom [Redo Go Backend](../backend_redogo).
 
