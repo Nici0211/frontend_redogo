@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Alert, Box, Typography, Button, Container, Grid, CircularProgress, IconButton, Snackbar } from '@mui/material'
 import { Link, useParams } from 'react-router-dom'
+import CartDrawer from '../components/CartDrawer'
 import { formatPrice, useMenu } from '../services/menuService'
 import type { MenuEntry } from '../services/menuService'
 import { MAX_QUANTITY, cartItemCount, useCart } from '../services/cartService'
@@ -181,7 +182,8 @@ function Section({ title, entries, emptyText, type, addingKey, onAdd }: SectionP
 export default function Menu() {
   const { id } = useParams<{ id: string }>()
   const { menu, loading, error, retry } = useMenu(id)
-  const { cart, addingKey, notice, clearNotice, add } = useCart()
+  const { cart, addingKey, updatingId, notice, clearNotice, add, remove, changeQuantity } = useCart()
+  const [cartOpen, setCartOpen] = useState(false)
 
   const handleAdd: AddHandler = (type, entry, quantity) => add(type, entry.id, entry.name, quantity)
   const itemCount = cartItemCount(cart)
@@ -272,18 +274,31 @@ export default function Menu() {
           }}
         >
           <Container maxWidth="lg" disableGutters sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, color: C.ink }}>
+            <Button
+              onClick={() => setCartOpen(true)}
+              aria-label="Warenkorb ansehen"
+              sx={{ display: 'flex', alignItems: 'center', gap: 1.5, color: C.ink, textTransform: 'none', px: 1, '&:hover': { bgcolor: 'rgba(255,255,255,0.05)' } }}
+            >
               <CartIcon size={24} />
               <Typography sx={{ fontFamily: FONT_BODY, fontWeight: 700, color: C.ink }}>
                 {itemCount} Artikel
               </Typography>
-            </Box>
+            </Button>
             <Typography sx={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '1.5rem', color: C.red }}>
               {formatPrice(cart.totalPrice)}
             </Typography>
           </Container>
         </Box>
       )}
+
+      <CartDrawer
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+        cart={cart}
+        updatingId={updatingId}
+        onRemove={(item) => { void remove(item) }}
+        onChangeQuantity={(item, quantity) => { void changeQuantity(item, quantity) }}
+      />
 
       <Snackbar
         open={notice !== null}
