@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/img.png'
 
 const navLinks: { label: string; to?: string }[] = [
-  { label: 'Speisekarte', to: '/speisekarte' },
-  { label: 'Standorte', to: '/standorte' },
+  { label: 'Speisekarte', to: '/menu' },
+  { label: 'Standorte', to: '/locations' },
   { label: 'Liefern' },
   { label: 'Abholen' },
   { label: 'Über uns' },
@@ -86,7 +86,7 @@ export default function Navbar() {
         <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'flex' }, gap: 1.5 }}>
           <Button
             component={Link}
-            to="/registrieren"
+            to="/register"
             variant="outlined"
             sx={{
               color: '#f5f5f5',
@@ -130,7 +130,7 @@ export default function Navbar() {
         <IconButton
           onClick={() => setOpen(true)}
           sx={{ display: { xs: 'flex', md: 'none' }, ml: 'auto', color: '#f5f5f5', p: 1 }}
-          aria-label="Menü öffnen"
+          aria-label="Open menu"
         >
           <svg width="22" height="22" viewBox="0 0 22 22" fill="currentColor">
             <rect y="3" width="22" height="2.2" rx="1.1" />
@@ -180,7 +180,7 @@ export default function Navbar() {
           <ListItem sx={{ pt: 4, px: 1 }}>
             <Button
               component={Link}
-              to="/registrieren"
+              to="/register"
               fullWidth
               variant="outlined"
               onClick={() => setOpen(false)}

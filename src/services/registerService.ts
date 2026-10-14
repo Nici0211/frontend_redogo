@@ -1,51 +1,51 @@
 import { useState } from 'react'
 
 export interface RegisterFormState {
-  vorname: string
-  nachname: string
+  firstName: string
+  lastName: string
   email: string
-  telefon: string
-  strasse: string
-  hausnummer: string
-  plz: string
-  ort: string
-  passwort: string
-  passwortWdh: string
+  phone: string
+  street: string
+  streetNumber: string
+  postalCode: string
+  city: string
+  password: string
+  passwordRepeat: string
 }
 
 export interface RegisterFormErrors {
-  vorname?: string
-  nachname?: string
+  firstName?: string
+  lastName?: string
   email?: string
-  strasse?: string
-  hausnummer?: string
-  plz?: string
-  ort?: string
-  passwort?: string
-  passwortWdh?: string
+  street?: string
+  streetNumber?: string
+  postalCode?: string
+  city?: string
+  password?: string
+  passwordRepeat?: string
 }
 
 export const EMPTY_FORM: RegisterFormState = {
-  vorname: '', nachname: '', email: '', telefon: '',
-  strasse: '', hausnummer: '', plz: '', ort: '',
-  passwort: '', passwortWdh: '',
+  firstName: '', lastName: '', email: '', phone: '',
+  street: '', streetNumber: '', postalCode: '', city: '',
+  password: '', passwordRepeat: '',
 }
 
 export function validateRegisterForm(form: RegisterFormState): RegisterFormErrors {
   const errors: RegisterFormErrors = {}
-  if (!form.vorname.trim()) errors.vorname = 'Pflichtfeld'
-  if (!form.nachname.trim()) errors.nachname = 'Pflichtfeld'
+  if (!form.firstName.trim()) errors.firstName = 'Pflichtfeld'
+  if (!form.lastName.trim()) errors.lastName = 'Pflichtfeld'
   if (!form.email.trim()) { errors.email = 'Pflichtfeld' }
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) { errors.email = 'Ungültige E-Mail-Adresse' }
-  if (!form.strasse.trim()) errors.strasse = 'Pflichtfeld'
-  if (!form.hausnummer.trim()) errors.hausnummer = 'Pflichtfeld'
-  if (!form.plz.trim()) { errors.plz = 'Pflichtfeld' }
-  else if (!/^\d{4,5}$/.test(form.plz.trim())) { errors.plz = 'Ungültige PLZ' }
-  if (!form.ort.trim()) errors.ort = 'Pflichtfeld'
-  if (!form.passwort) { errors.passwort = 'Pflichtfeld' }
-  else if (form.passwort.length < 8) { errors.passwort = 'Mindestens 8 Zeichen' }
-  if (!form.passwortWdh) { errors.passwortWdh = 'Pflichtfeld' }
-  else if (form.passwort !== form.passwortWdh) { errors.passwortWdh = 'Passwörter stimmen nicht überein' }
+  if (!form.street.trim()) errors.street = 'Pflichtfeld'
+  if (!form.streetNumber.trim()) errors.streetNumber = 'Pflichtfeld'
+  if (!form.postalCode.trim()) { errors.postalCode = 'Pflichtfeld' }
+  else if (!/^\d{4,5}$/.test(form.postalCode.trim())) { errors.postalCode = 'Ungültige PLZ' }
+  if (!form.city.trim()) errors.city = 'Pflichtfeld'
+  if (!form.password) { errors.password = 'Pflichtfeld' }
+  else if (form.password.length < 8) { errors.password = 'Mindestens 8 Zeichen' }
+  if (!form.passwordRepeat) { errors.passwordRepeat = 'Pflichtfeld' }
+  else if (form.password !== form.passwordRepeat) { errors.passwordRepeat = 'Passwörter stimmen nicht überein' }
   return errors
 }
 
@@ -53,7 +53,7 @@ export function useRegisterForm() {
   const [form, setForm] = useState<RegisterFormState>(EMPTY_FORM)
   const [errors, setErrors] = useState<RegisterFormErrors>({})
   const [showPw, setShowPw] = useState(false)
-  const [showPwWdh, setShowPwWdh] = useState(false)
+  const [showPwRepeat, setShowPwRepeat] = useState(false)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
@@ -78,15 +78,15 @@ export function useRegisterForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          vorname: form.vorname,
-          nachname: form.nachname,
+          vorname: form.firstName,
+          nachname: form.lastName,
           email: form.email,
-          telefon: form.telefon || null,
-          strasse: form.strasse,
-          hausnummer: form.hausnummer,
-          plz: form.plz,
-          ort: form.ort,
-          passwort: form.passwort,
+          telefon: form.phone || null,
+          strasse: form.street,
+          hausnummer: form.streetNumber,
+          plz: form.postalCode,
+          ort: form.city,
+          passwort: form.password,
         }),
       })
 
@@ -105,7 +105,7 @@ export function useRegisterForm() {
   }
 
   return {
-    form, errors, showPw, setShowPw, showPwWdh, setShowPwWdh,
+    form, errors, showPw, setShowPw, showPwRepeat, setShowPwRepeat,
     success, loading, apiError, handleChange, handleSubmit,
   }
 }

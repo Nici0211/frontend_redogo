@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Register from './pages/Register'
-import Standorte from './pages/Standorte'
-import SpeisekarteAuswahl from './pages/SpeisekarteAuswahl'
-import Speisekarte from './pages/Speisekarte'
+import Locations from './pages/Locations'
+import MenuSelection from './pages/MenuSelection'
+import Menu from './pages/Menu'
 
 export default function App() {
     return (
@@ -12,10 +12,10 @@ export default function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/registrieren" element={<Register />} />
-                <Route path="/standorte" element={<Standorte />} />
-                <Route path="/speisekarte" element={<SpeisekarteAuswahl />} />
-                <Route path="/standorte/:id/speisekarte" element={<Speisekarte />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/locations" element={<Locations />} />
+                <Route path="/menu" element={<MenuSelection />} />
+                <Route path="/locations/:id/menu" element={<Menu />} />
             </Routes>
         </BrowserRouter>
     )
