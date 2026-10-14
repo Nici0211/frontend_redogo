@@ -52,7 +52,7 @@ function EyeIcon({ open }: { open: boolean }) {
 
 export default function Register() {
   const {
-    form, errors, showPw, setShowPw, showPwWdh, setShowPwWdh,
+    form, errors, showPw, setShowPw, showPwRepeat, setShowPwRepeat,
     success, loading, apiError, handleChange, handleSubmit,
   } = useRegisterForm()
 
@@ -76,7 +76,7 @@ export default function Register() {
               Registrierung <Box component="span" sx={{ color: C.success }}>erfolgreich!</Box>
             </Typography>
             <Typography sx={{ fontFamily: FONT_BODY, color: C.muted, mb: 4 }}>
-              Willkommen bei RedoGo, {form.vorname}!
+              Willkommen bei RedoGo, {form.firstName}!
             </Typography>
             <Button component={Link} to="/" sx={{
               bgcolor: C.red, color: '#fff', fontFamily: FONT_DISPLAY, fontWeight: 800,
@@ -118,64 +118,64 @@ export default function Register() {
           display: 'flex', flexDirection: 'column', gap: 3,
         }}>
 
-          {/* Persönliche Daten */}
+          {/* Personal Data */}
           <Box>
             <Typography sx={sectionLabel}>Persönliche Daten</Typography>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField label="Vorname" value={form.vorname} onChange={handleChange('vorname')}
-                  error={!!errors.vorname} helperText={errors.vorname} required fullWidth sx={fieldSx} />
+                <TextField label="Vorname" value={form.firstName} onChange={handleChange('firstName')}
+                  error={!!errors.firstName} helperText={errors.firstName} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField label="Nachname" value={form.nachname} onChange={handleChange('nachname')}
-                  error={!!errors.nachname} helperText={errors.nachname} required fullWidth sx={fieldSx} />
+                <TextField label="Nachname" value={form.lastName} onChange={handleChange('lastName')}
+                  error={!!errors.lastName} helperText={errors.lastName} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField label="E-Mail" type="email" value={form.email} onChange={handleChange('email')}
                   error={!!errors.email} helperText={errors.email} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField label="Telefon (optional)" type="tel" value={form.telefon}
-                  onChange={handleChange('telefon')} fullWidth sx={fieldSx} />
+                <TextField label="Telefon (optional)" type="tel" value={form.phone}
+                  onChange={handleChange('phone')} fullWidth sx={fieldSx} />
               </Grid>
             </Grid>
           </Box>
 
           <Divider sx={{ borderColor: C.border }} />
 
-          {/* Adresse */}
+          {/* Address */}
           <Box>
             <Typography sx={sectionLabel}>Adresse</Typography>
             <Grid container spacing={2}>
               <Grid size={{ xs: 8 }}>
-                <TextField label="Straße" value={form.strasse} onChange={handleChange('strasse')}
-                  error={!!errors.strasse} helperText={errors.strasse} required fullWidth sx={fieldSx} />
+                <TextField label="Straße" value={form.street} onChange={handleChange('street')}
+                  error={!!errors.street} helperText={errors.street} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 4 }}>
-                <TextField label="Nr." value={form.hausnummer} onChange={handleChange('hausnummer')}
-                  error={!!errors.hausnummer} helperText={errors.hausnummer} required fullWidth sx={fieldSx} />
+                <TextField label="Nr." value={form.streetNumber} onChange={handleChange('streetNumber')}
+                  error={!!errors.streetNumber} helperText={errors.streetNumber} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 4 }}>
-                <TextField label="PLZ" value={form.plz} onChange={handleChange('plz')}
-                  error={!!errors.plz} helperText={errors.plz} required fullWidth sx={fieldSx} />
+                <TextField label="PLZ" value={form.postalCode} onChange={handleChange('postalCode')}
+                  error={!!errors.postalCode} helperText={errors.postalCode} required fullWidth sx={fieldSx} />
               </Grid>
               <Grid size={{ xs: 8 }}>
-                <TextField label="Ort" value={form.ort} onChange={handleChange('ort')}
-                  error={!!errors.ort} helperText={errors.ort} required fullWidth sx={fieldSx} />
+                <TextField label="Ort" value={form.city} onChange={handleChange('city')}
+                  error={!!errors.city} helperText={errors.city} required fullWidth sx={fieldSx} />
               </Grid>
             </Grid>
           </Box>
 
           <Divider sx={{ borderColor: C.border }} />
 
-          {/* Passwort */}
+          {/* Password */}
           <Box>
             <Typography sx={sectionLabel}>Passwort</Typography>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12 }}>
                 <TextField label="Passwort" type={showPw ? 'text' : 'password'}
-                  value={form.passwort} onChange={handleChange('passwort')}
-                  error={!!errors.passwort} helperText={errors.passwort} required fullWidth sx={fieldSx}
+                  value={form.password} onChange={handleChange('password')}
+                  error={!!errors.password} helperText={errors.password} required fullWidth sx={fieldSx}
                   slotProps={{ input: { endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={() => setShowPw(v => !v)} edge="end" sx={{ color: C.muted, '&:hover': { color: C.ink } }}>
@@ -185,13 +185,13 @@ export default function Register() {
                   )}}} />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <TextField label="Passwort wiederholen" type={showPwWdh ? 'text' : 'password'}
-                  value={form.passwortWdh} onChange={handleChange('passwortWdh')}
-                  error={!!errors.passwortWdh} helperText={errors.passwortWdh} required fullWidth sx={fieldSx}
+                <TextField label="Passwort wiederholen" type={showPwRepeat ? 'text' : 'password'}
+                  value={form.passwordRepeat} onChange={handleChange('passwordRepeat')}
+                  error={!!errors.passwordRepeat} helperText={errors.passwordRepeat} required fullWidth sx={fieldSx}
                   slotProps={{ input: { endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPwWdh(v => !v)} edge="end" sx={{ color: C.muted, '&:hover': { color: C.ink } }}>
-                        <EyeIcon open={showPwWdh} />
+                      <IconButton onClick={() => setShowPwRepeat(v => !v)} edge="end" sx={{ color: C.muted, '&:hover': { color: C.ink } }}>
+                        <EyeIcon open={showPwRepeat} />
                       </IconButton>
                     </InputAdornment>
                   )}}} />
