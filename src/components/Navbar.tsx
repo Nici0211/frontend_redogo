@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, Menu, MenuItem, Divider } from '@mui/material'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/img.png'
+import { clearUserId, clearUserName, getUserName } from '../services/userSession'
 
 const navLinks: { label: string; to?: string }[] = [
   { label: 'Speisekarte', to: '/menu' },
@@ -11,8 +12,101 @@ const navLinks: { label: string; to?: string }[] = [
   { label: 'Über uns' },
 ]
 
+function getInitials(name: string): string {
+  return name.split(' ').map((n) => n[0] ?? '').join('').toUpperCase().slice(0, 2)
+}
+
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [userName, setUserNameState] = useState<string | null>(getUserName)
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const sync = () => setUserNameState(getUserName())
+    window.addEventListener('redogo:auth', sync)
+    return () => window.removeEventListener('redogo:auth', sync)
+  }, [])
+
+  function handleLogout() {
+    setMenuAnchor(null)
+    clearUserId()
+    clearUserName()
+    navigate('/')
+  }
+
+  const avatarButton = (
+    <IconButton
+      onClick={(e) => userName ? setMenuAnchor(e.currentTarget) : undefined}
+      {...(!userName ? { component: Link, to: '/login' } : {})}
+      aria-label={userName ? 'Konto-Menü' : 'Anmelden'}
+      sx={{
+        width: 36, height: 36, borderRadius: '50%', p: 0,
+        bgcolor: userName ? '#e8000d' : 'transparent',
+        border: userName ? 'none' : '1.5px solid rgba(245,245,245,0.22)',
+        color: userName ? '#fff' : 'rgba(245,245,245,0.75)',
+        '&:hover': {
+          bgcolor: userName ? '#c4000b' : 'rgba(255,255,255,0.07)',
+          borderColor: '#f5f5f5', color: '#f5f5f5',
+        },
+        transition: 'all 0.18s',
+      }}
+    >
+      {userName ? (
+        <Typography sx={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: '0.95rem', color: '#fff', lineHeight: 1 }}>
+          {getInitials(userName)}
+        </Typography>
+      ) : (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      )}
+    </IconButton>
+  )
+
+  const authSection = (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+      {userName && (
+        <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600, fontSize: '0.88rem', color: 'rgba(245,245,245,0.8)', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          Hallo, {userName.split(' ')[0]}
+        </Typography>
+      )}
+      {avatarButton}
+      <Menu
+        anchorEl={menuAnchor}
+        open={Boolean(menuAnchor)}
+        onClose={() => setMenuAnchor(null)}
+        slotProps={{
+          paper: {
+            sx: {
+              bgcolor: '#1a1a1a', border: '1px solid rgba(232,0,13,0.2)',
+              borderRadius: '8px', mt: 1, minWidth: 160,
+              boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem
+          component={Link}
+          to="/account"
+          onClick={() => setMenuAnchor(null)}
+          sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'rgba(245,245,245,0.85)', py: 1.2, '&:hover': { bgcolor: 'rgba(232,0,13,0.12)', color: '#f5f5f5' } }}
+        >
+          Mein Konto
+        </MenuItem>
+        <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)', my: 0.5 }} />
+        <MenuItem
+          onClick={handleLogout}
+          sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'rgba(245,245,245,0.55)', py: 1.2, '&:hover': { bgcolor: 'rgba(255,255,255,0.05)', color: '#f5f5f5' } }}
+        >
+          Abmelden
+        </MenuItem>
+      </Menu>
+    </Box>
+  )
 
   return (
     <AppBar
@@ -24,39 +118,14 @@ export default function Navbar() {
         boxShadow: 'none',
       }}
     >
-      <Toolbar
-        sx={{
-          maxWidth: 1200,
-          width: '100%',
-          mx: 'auto',
-          px: { xs: 2, md: 4 },
-          py: 1.5,
-          gap: 2,
-        }}
-      >
-        {/* Brand → Home */}
-        <Box
-          component={Link}
-          to="/"
-          sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, textDecoration: 'none' }}
-        >
-          <Box
-            component="img"
-            src={logo}
-            alt="RedoGo"
-            sx={{ height: 44, objectFit: 'contain' }}
-          />
-          <Typography
-            sx={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 900,
-              fontSize: '1.6rem',
-              letterSpacing: '0.03em',
-              textTransform: 'uppercase',
-              color: '#f5f5f5',
-              lineHeight: 1,
-            }}
-          >
+      <Toolbar sx={{ maxWidth: 1200, width: '100%', mx: 'auto', px: { xs: 2, md: 4 }, py: 1.5, gap: 2 }}>
+
+        <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, textDecoration: 'none' }}>
+          <Box component="img" src={logo} alt="RedoGo" sx={{ height: 44, objectFit: 'contain' }} />
+          <Typography sx={{
+            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, fontSize: '1.6rem',
+            letterSpacing: '0.03em', textTransform: 'uppercase', color: '#f5f5f5', lineHeight: 1,
+          }}>
             Redo<span style={{ color: '#e8000d' }}>Go</span>
           </Typography>
         </Box>
@@ -68,13 +137,9 @@ export default function Navbar() {
               key={link.label}
               {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}
               sx={{
-                fontFamily: "'Nunito', sans-serif",
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                color: 'rgba(245,245,245,0.65)',
-                textDecoration: 'none',
-                transition: 'color 0.18s',
-                '&:hover': { color: '#e8000d' },
+                fontFamily: "'Nunito', sans-serif", fontWeight: 600, fontSize: '0.9rem',
+                color: 'rgba(245,245,245,0.65)', textDecoration: 'none',
+                transition: 'color 0.18s', '&:hover': { color: '#e8000d' },
               }}
             >
               {link.label}
@@ -82,48 +147,9 @@ export default function Navbar() {
           ))}
         </Box>
 
-        {/* CTA */}
-        <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'flex' }, gap: 1.5 }}>
-          <Button
-            component={Link}
-            to="/register"
-            variant="outlined"
-            sx={{
-              color: '#f5f5f5',
-              borderColor: 'rgba(245,245,245,0.18)',
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 700,
-              fontSize: '1rem',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              px: 3,
-              py: 1,
-              borderRadius: '6px',
-              textDecoration: 'none',
-              '&:hover': { borderColor: '#f5f5f5', bgcolor: 'rgba(255,255,255,0.05)' },
-              transition: 'all 0.18s',
-            }}
-          >
-            Registrieren
-          </Button>
-          <Button
-            sx={{
-              bgcolor: '#e8000d',
-              color: '#fff',
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 800,
-              fontSize: '1rem',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              px: 3,
-              py: 1,
-              borderRadius: '6px',
-              '&:hover': { bgcolor: '#c4000b', transform: 'translateY(-1px)', boxShadow: '0 4px 20px rgba(232,0,13,0.35)' },
-              transition: 'all 0.18s',
-            }}
-          >
-            Jetzt bestellen
-          </Button>
+        {/* Desktop auth */}
+        <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'flex' } }}>
+          {authSection}
         </Box>
 
         {/* Mobile hamburger */}
@@ -156,6 +182,21 @@ export default function Navbar() {
             <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </IconButton>
+
+        {/* Mobile user greeting */}
+        {userName && (
+          <Box sx={{ px: 1, pb: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <Box sx={{ width: 36, height: 36, borderRadius: '50%', bgcolor: '#e8000d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Typography sx={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: '0.95rem', color: '#fff', lineHeight: 1 }}>
+                {getInitials(userName)}
+              </Typography>
+            </Box>
+            <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600, fontSize: '0.9rem', color: 'rgba(245,245,245,0.8)' }}>
+              {userName}
+            </Typography>
+          </Box>
+        )}
+
         <List sx={{ gap: 0.5 }}>
           {navLinks.map((link) => (
             <ListItem key={link.label} sx={{ py: 1.5, px: 1 }}>
@@ -163,63 +204,51 @@ export default function Navbar() {
                 {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}
                 onClick={() => setOpen(false)}
                 sx={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 700,
-                  fontSize: '1.6rem',
-                  textTransform: 'uppercase',
-                  color: 'rgba(245,245,245,0.85)',
-                  textDecoration: 'none',
-                  letterSpacing: '0.03em',
-                  '&:hover': { color: '#e8000d' },
+                  fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: '1.6rem',
+                  textTransform: 'uppercase', color: 'rgba(245,245,245,0.85)', textDecoration: 'none',
+                  letterSpacing: '0.03em', '&:hover': { color: '#e8000d' },
                 }}
               >
                 {link.label}
               </Typography>
             </ListItem>
           ))}
-          <ListItem sx={{ pt: 4, px: 1 }}>
-            <Button
-              component={Link}
-              to="/register"
-              fullWidth
-              variant="outlined"
-              onClick={() => setOpen(false)}
-              sx={{
-                color: '#f5f5f5',
-                borderColor: 'rgba(245,245,245,0.18)',
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 700,
-                fontSize: '1.1rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                py: 1.5,
-                borderRadius: '6px',
-                textDecoration: 'none',
-                '&:hover': { borderColor: '#f5f5f5' },
-              }}
-            >
-              Registrieren
-            </Button>
-          </ListItem>
-          <ListItem sx={{ pt: 1.5, px: 1 }}>
-            <Button
-              fullWidth
-              sx={{
-                bgcolor: '#e8000d',
-                color: '#fff',
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 800,
-                fontSize: '1.1rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                py: 1.5,
-                borderRadius: '6px',
-                '&:hover': { bgcolor: '#c4000b' },
-              }}
-            >
-              Jetzt bestellen
-            </Button>
-          </ListItem>
+
+          {userName ? (
+            <>
+              <ListItem sx={{ pt: 4, px: 1 }}>
+                <Button component={Link} to="/account" fullWidth onClick={() => setOpen(false)} sx={{
+                  color: '#f5f5f5', borderColor: 'rgba(245,245,245,0.18)', border: '1px solid',
+                  fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: '1.1rem',
+                  textTransform: 'uppercase', letterSpacing: '0.06em', py: 1.5, borderRadius: '6px',
+                  textDecoration: 'none', '&:hover': { borderColor: '#f5f5f5' },
+                }}>
+                  Mein Konto
+                </Button>
+              </ListItem>
+              <ListItem sx={{ pt: 1.5, px: 1 }}>
+                <Button fullWidth onClick={() => { setOpen(false); handleLogout() }} sx={{
+                  color: 'rgba(245,245,245,0.55)', borderColor: 'rgba(245,245,245,0.12)', border: '1px solid',
+                  fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: '1.1rem',
+                  textTransform: 'uppercase', letterSpacing: '0.06em', py: 1.5, borderRadius: '6px',
+                  '&:hover': { borderColor: '#f5f5f5', color: '#f5f5f5' },
+                }}>
+                  Abmelden
+                </Button>
+              </ListItem>
+            </>
+          ) : (
+            <ListItem sx={{ pt: 4, px: 1 }}>
+              <Button component={Link} to="/login" fullWidth variant="outlined" onClick={() => setOpen(false)} sx={{
+                color: '#f5f5f5', borderColor: 'rgba(245,245,245,0.18)',
+                fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: '1.1rem',
+                textTransform: 'uppercase', letterSpacing: '0.06em', py: 1.5, borderRadius: '6px',
+                textDecoration: 'none', '&:hover': { borderColor: '#f5f5f5' },
+              }}>
+                Anmelden
+              </Button>
+            </ListItem>
+          )}
         </List>
       </Drawer>
     </AppBar>
