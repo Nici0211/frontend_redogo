@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { setUserId, setUserName } from './userSession'
 
 export interface LoginFormState {
@@ -25,10 +26,9 @@ export function useLoginForm() {
   const [form, setForm] = useState<LoginFormState>(EMPTY_LOGIN_FORM)
   const [errors, setErrors] = useState<LoginFormErrors>({})
   const [showPw, setShowPw] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
-  const [loggedInName, setLoggedInName] = useState<string>('')
+  const navigate = useNavigate()
 
   function handleChange(field: keyof LoginFormState) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +56,8 @@ export function useLoginForm() {
         const user = await res.json()
         if (typeof user?.id === 'number') setUserId(user.id)
         const name = `${user?.vorname ?? ''} ${user?.nachname ?? ''}`.trim()
-        if (name) { setUserName(name); setLoggedInName(name) }
-        setSuccess(true)
+        if (name) setUserName(name)
+        navigate('/')
       } else if (res.status === 401) {
         setApiError('E-Mail oder Passwort ungültig')
       } else {
@@ -72,7 +72,7 @@ export function useLoginForm() {
 
   return {
     form, errors, showPw, setShowPw,
-    success, loading, apiError, loggedInName,
+    loading, apiError,
     handleChange, handleSubmit,
   }
 }
