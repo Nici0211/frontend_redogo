@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { setUserId } from './userSession'
+import { setUserId, setUserName } from './userSession'
 
 export interface RegisterFormState {
   firstName: string
@@ -96,6 +96,7 @@ export function useRegisterForm() {
           // ID des neuen Benutzers merken - sie wird für den Warenkorb gebraucht
           const user = await res.json()
           if (typeof user?.id === 'number') setUserId(user.id)
+          if (user?.vorname) setUserName(`${user.vorname} ${user.nachname ?? ''}`.trim())
         } catch {
           // Antwort ohne lesbaren Body - die Registrierung war trotzdem erfolgreich
         }
