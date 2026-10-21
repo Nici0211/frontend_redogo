@@ -10,7 +10,7 @@ const C = {
   border: 'rgba(255,255,255,0.1)', borderHover: 'rgba(255,255,255,0.22)',
   red: '#e8000d', redDark: '#c4000b',
   ink: '#f4f4f5', muted: '#a1a1aa',
-  error: '#f87171', success: '#4ade80',
+  error: '#f87171',
 }
 
 const FONT_DISPLAY = "'Barlow Condensed', sans-serif"
@@ -48,45 +48,9 @@ function EyeIcon({ open }: { open: boolean }) {
 export default function Login() {
   const {
     form, errors, showPw, setShowPw,
-    success, loading, apiError, loggedInName,
+    loading, apiError,
     handleChange, handleSubmit,
   } = useLoginForm()
-
-  if (success) {
-    return (
-      <Box sx={{ bgcolor: C.bg, minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-        <Container maxWidth="sm">
-          <Box sx={{
-            bgcolor: C.surface, border: '1px solid rgba(74,222,128,0.25)',
-            borderRadius: '16px', p: { xs: 4, md: 6 }, textAlign: 'center',
-          }}>
-            <Box sx={{
-              width: 64, height: 64, borderRadius: '50%', bgcolor: 'rgba(74,222,128,0.12)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3,
-            }}>
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M6 16l8 8L26 8" stroke={C.success} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Box>
-            <Typography sx={{ fontFamily: FONT_DISPLAY, fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase', color: C.ink, mb: 1 }}>
-              Willkommen <Box component="span" sx={{ color: C.success }}>zurück!</Box>
-            </Typography>
-            <Typography sx={{ fontFamily: FONT_BODY, color: C.muted, mb: 4 }}>
-              {loggedInName ? `Hallo, ${loggedInName.split(' ')[0]}!` : 'Anmeldung erfolgreich.'}
-            </Typography>
-            <Button component={Link} to="/" sx={{
-              bgcolor: C.red, color: '#fff', fontFamily: FONT_DISPLAY, fontWeight: 800,
-              fontSize: '1rem', letterSpacing: '0.05em', textTransform: 'uppercase',
-              px: 4, py: 1.3, borderRadius: '8px', textDecoration: 'none',
-              '&:hover': { bgcolor: C.redDark },
-            }}>
-              Zur Startseite
-            </Button>
-          </Box>
-        </Container>
-      </Box>
-    )
-  }
 
   return (
     <Box sx={{ bgcolor: C.bg, minHeight: '100vh', display: 'flex', alignItems: 'center', py: { xs: 4, md: 8 } }}>
