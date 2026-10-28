@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, Menu, MenuItem, Divider } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/img.png'
-import { clearUserId, clearUserName, getUserName } from '../services/userSession'
+import { clearUserId, clearUserName, clearUserRole, getUserName, isAdmin } from '../services/userSession'
 
 const navLinks: { label: string; to?: string }[] = [
   { label: 'Speisekarte', to: '/menu' },
@@ -16,14 +16,20 @@ function getInitials(name: string): string {
   return name.split(' ').map((n) => n[0] ?? '').join('').toUpperCase().slice(0, 2)
 }
 
+const adminLink = { label: 'Verwaltung', to: '/admin' }
+
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [userName, setUserNameState] = useState<string | null>(getUserName)
+  const [admin, setAdmin] = useState<boolean>(isAdmin)
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
   const navigate = useNavigate()
 
   useEffect(() => {
-    const sync = () => setUserNameState(getUserName())
+    const sync = () => {
+      setUserNameState(getUserName())
+      setAdmin(isAdmin())
+    }
     window.addEventListener('redogo:auth', sync)
     return () => window.removeEventListener('redogo:auth', sync)
   }, [])
@@ -31,9 +37,13 @@ export default function Navbar() {
   function handleLogout() {
     setMenuAnchor(null)
     clearUserId()
+    clearUserRole()
     clearUserName()
     navigate('/')
   }
+
+  // US09: Restaurantinhaber sehen zusätzlich den Link zur Admin-Seite
+  const links = admin && userName ? [...navLinks, adminLink] : navLinks
 
   const avatarButton = (
     <IconButton
@@ -132,7 +142,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3.5, ml: 5, flex: 1 }}>
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <Typography
               key={link.label}
               {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}
@@ -198,7 +208,7 @@ export default function Navbar() {
         )}
 
         <List sx={{ gap: 0.5 }}>
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <ListItem key={link.label} sx={{ py: 1.5, px: 1 }}>
               <Typography
                 {...(link.to ? { component: Link, to: link.to } : { component: 'a', href: '#' })}

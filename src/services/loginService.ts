@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { setUserId, setUserName } from './userSession'
+import { setUserId, setUserName, setUserRole } from './userSession'
 
 export interface LoginFormState {
   email: string
@@ -55,9 +55,11 @@ export function useLoginForm() {
       if (res.status === 200) {
         const user = await res.json()
         if (typeof user?.id === 'number') setUserId(user.id)
+        const role = user?.role === 'ADMIN' ? 'ADMIN' : 'USER'
+        setUserRole(role)
         const name = `${user?.vorname ?? ''} ${user?.nachname ?? ''}`.trim()
         if (name) setUserName(name)
-        navigate('/')
+        navigate(role === 'ADMIN' ? '/admin' : '/')
       } else if (res.status === 401) {
         setApiError('E-Mail oder Passwort ungültig')
       } else {
