@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Locations from './pages/Locations'
 import MenuSelection from './pages/MenuSelection'
 import Menu from './pages/Menu'
+import AdminDishes from './pages/AdminDishes'
 
 export default function App() {
     return (
@@ -18,6 +19,7 @@ export default function App() {
                 <Route path="/locations" element={<Locations />} />
                 <Route path="/menu" element={<MenuSelection />} />
                 <Route path="/locations/:id/menu" element={<Menu />} />
+                <Route path="/admin" element={<AdminDishes />} />
             </Routes>
         </BrowserRouter>
     )
