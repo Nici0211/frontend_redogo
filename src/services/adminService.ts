@@ -59,11 +59,16 @@ export async function fetchOwnRestaurants(adminId: number, signal?: AbortSignal)
   return (await res.json()) as Restaurant[]
 }
 
-export async function createDish(adminId: number, restaurantId: number, form: DishFormState): Promise<MenuEntry> {
+/** Ein Eintrag der Speisekarte ist entweder ein einzelnes Gericht oder ein Menü (Kombi-Angebot). */
+export type EntryKind = 'dish' | 'menu'
+
+const kindPath = (kind: EntryKind) => (kind === 'dish' ? 'dishes' : 'menus')
+
+export async function createDish(adminId: number, restaurantId: number, form: DishFormState, kind: EntryKind = 'dish'): Promise<MenuEntry> {
   const price = parsePrice(form.price)
   if (price === null) throw new Error('Ungültiger Preis')
 
-  const res = await fetch(`${adminBase(adminId)}/restaurants/${restaurantId}/dishes`, {
+  const res = await fetch(`${adminBase(adminId)}/restaurants/${restaurantId}/${kindPath(kind)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -73,8 +78,14 @@ export async function createDish(adminId: number, restaurantId: number, form: Di
       available: form.available,
     }),
   })
-  if (!res.ok) throw new Error(await readError(res, 'Das Gericht konnte nicht gespeichert werden.'))
+  if (!res.ok) throw new Error(await readError(res, kind === 'dish' ? 'Das Gericht konnte nicht gespeichert werden.' : 'Das Menü konnte nicht gespeichert werden.'))
   return (await res.json()) as MenuEntry
+}
+
+/** US11: Löscht ein Gericht oder Menü von der Speisekarte (Antwort 204 ohne Inhalt). */
+export async function deleteDish(adminId: number, restaurantId: number, id: number, kind: EntryKind = 'dish'): Promise<void> {
+  const res = await fetch(`${adminBase(adminId)}/restaurants/${restaurantId}/${kindPath(kind)}/${id}`, { method: 'DELETE' })
+  if (!res.ok) throw new Error(await readError(res, kind === 'dish' ? 'Das Gericht konnte nicht gelöscht werden.' : 'Das Menü konnte nicht gelöscht werden.'))
 }
 
 /** Lädt die Restaurants des angemeldeten Admins. */
