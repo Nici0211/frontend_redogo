@@ -1,6 +1,33 @@
 const ID_KEY = 'redogo.userId'
 const NAME_KEY = 'redogo.userName'
 const ROLE_KEY = 'redogo.userRole'
+const DATA_KEY = 'redogo.userData'
+
+export interface StoredUserData {
+  vorname?: string
+  nachname?: string
+  email?: string
+  telefon?: string
+  strasse?: string
+  hausnummer?: string
+  plz?: string
+  ort?: string
+}
+
+export function setUserData(data: StoredUserData): void {
+  try { localStorage.setItem(DATA_KEY, JSON.stringify(data)) } catch {}
+}
+
+export function getUserData(): StoredUserData | null {
+  try {
+    const raw = localStorage.getItem(DATA_KEY)
+    return raw ? (JSON.parse(raw) as StoredUserData) : null
+  } catch { return null }
+}
+
+export function clearUserData(): void {
+  try { localStorage.removeItem(DATA_KEY) } catch {}
+}
 
 /** US09: USER = normaler Kunde, ADMIN = Restaurantinhaber. */
 export type UserRole = 'USER' | 'ADMIN'

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, Menu, MenuItem, Divider } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/img.png'
-import { clearUserId, clearUserName, clearUserRole, getUserName, isAdmin } from '../services/userSession'
+import { clearUserId, clearUserName, clearUserRole, clearUserData, getUserName, isAdmin } from '../services/userSession'
 
 const navLinks: { label: string; to?: string }[] = [
   { label: 'Speisekarte', to: '/menu' },
@@ -38,6 +38,7 @@ export default function Navbar() {
     setMenuAnchor(null)
     clearUserId()
     clearUserRole()
+    clearUserData()
     clearUserName()
     navigate('/')
   }

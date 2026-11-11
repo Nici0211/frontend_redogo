@@ -7,6 +7,7 @@ import Locations from './pages/Locations'
 import MenuSelection from './pages/MenuSelection'
 import Menu from './pages/Menu'
 import AdminDishes from './pages/AdminDishes'
+import Account from './pages/Account'
 
 export default function App() {
     return (
@@ -20,6 +21,7 @@ export default function App() {
                 <Route path="/menu" element={<MenuSelection />} />
                 <Route path="/locations/:id/menu" element={<Menu />} />
                 <Route path="/admin" element={<AdminDishes />} />
+                <Route path="/account" element={<Account />} />
             </Routes>
         </BrowserRouter>
     )
